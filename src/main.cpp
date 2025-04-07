@@ -47,7 +47,7 @@ void setup() {
 uint32_t analog_loop, serial_loop, buttons_loop;
 #define analog_refresh 1
 #define serial_refresh 100
-#define buttons_refresh 100
+#define buttons_refresh 50
 void loop() {
 
   // if(millis() - analog_loop > analog_refresh){
@@ -60,10 +60,10 @@ void loop() {
   //   Serial.println(buttons_filtered);
   // }
 
-  if(millis() - analog_loop > analog_refresh){
+  if(millis() - analog_loop > buttons_refresh){
     analog_loop = millis();
 
-    if(is_pressed(buttons_filtered, buttons_filtered_old, 1)){
+    if(is_pressed(buttons_filtered, buttons_filtered_old, 3)){
       if(is_pressed(buttons_filtered, BT_PLUS, BT_ERR)){
         JVC.send(JVC_VOLUP);
       }else if(is_pressed(buttons_filtered, BT_MINUS, BT_ERR)){
@@ -80,7 +80,6 @@ void loop() {
     }else{
       buttons_filtered_old = buttons_filtered;
     }
-
   }
 }
 
